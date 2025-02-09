@@ -36,4 +36,5 @@ class SiteSwitchForm(forms.Form):
         return reverse(
             "wagtailsettings:edit",
             args=[model._meta.app_label, model._meta.model_name, site.pk],
+            scheme='https'
         )

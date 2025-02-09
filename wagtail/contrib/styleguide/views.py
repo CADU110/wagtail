@@ -28,6 +28,8 @@ from wagtail.images.widgets import AdminImageChooser
 from wagtail.models import Page
 from wagtail.snippets.widgets import AdminSnippetChooser
 
+url = forms.URLField(required=True, assume_scheme='https')
+
 
 class FakeAdminSnippetChooser(AdminSnippetChooser):
     """

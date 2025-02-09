@@ -215,6 +215,14 @@ class Redirect(models.Model):
         else:
             self.redirect_page_route_path = ""
 
+    def remove_redirect_and_clear_cache(redirect_id):
+        try:
+            redirect = Redirect.objects.get(id=redirect_id)
+            cache.delete(redirect.name)
+            redirect.delete()
+        except Redirect.DoesNotExist:
+            pass
+
     class Meta:
         verbose_name = _("redirect")
         verbose_name_plural = _("redirects")

@@ -8,6 +8,8 @@ from django.utils.translation import gettext_lazy as _
 from wagtail.models import Locale
 from wagtail.search.backends import get_search_backend
 
+url = forms.URLField(required=True, assume_scheme='https')
+
 
 class URLOrAbsolutePathValidator(validators.URLValidator):
     @staticmethod
@@ -25,10 +27,9 @@ class URLOrAbsolutePathField(forms.URLField):
     widget = TextInput
     default_validators = [URLOrAbsolutePathValidator()]
 
-    def to_python(self, value):
-        if not URLOrAbsolutePathValidator.is_absolute_path(value):
-            value = super().to_python(value)
-        return value
+    def __init__(self, *args, **kwargs):
+        kwargs['assume_scheme'] = 'https'  # Add this line to ensure the https scheme is assumed
+        super().__init__(*args, **kwargs)
 
 
 class ExternalLinkChooserForm(forms.Form):
